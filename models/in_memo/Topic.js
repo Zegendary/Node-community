@@ -17,7 +17,7 @@ class Topic {
   }
 }
 
-async function index(topicId) {
+async function index() {
   return topics
 }
 

@@ -13,7 +13,7 @@ class User {
   }
 }
 
-async function index(userId) {
+async function index() {
   return users
 }
 
