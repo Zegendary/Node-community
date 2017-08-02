@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const User = require('../models/in_memo/User')
+const User = require('../models/mongo/User')
 
 /* GET users listing. */
 router.route('/')
@@ -49,10 +49,10 @@ router.route('/:id')
   })
   .patch((req, res, next) => {
     (async () => {
-      let user = await User.update(req.params.id,{
-        name: req.body.name,
-        age: req.body.age
-      })
+      let update = {}
+      if (req.body.name) update.name = req.body.name
+      if (req.body.age) update.age = req.body.age
+      let user = await User.update(req.params.id,update)
       return {
         code: 0,
         user

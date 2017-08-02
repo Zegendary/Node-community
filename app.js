@@ -8,6 +8,7 @@ var bodyParser = require('body-parser');
 const index = require('./routes/index');
 const users = require('./routes/users');
 const topics = require('./routes/topics');
+require('./services/mongoose_service');
 
 var app = express();
 

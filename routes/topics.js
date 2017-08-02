@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-const User = require('../models/in_memo/User');
-const Topic = require('../models/in_memo/Topic');
+const User = require('../models/mongo/User');
+const Topic = require('../models/mongo/Topic');
 
 /* GET topics listing. */
 router.route('/')
@@ -53,12 +53,11 @@ router.route('/:id')
   })
   .patch((req, res, next) => {
     (async () => {
-      let topic = await Topic.update(req.params.id,{
-        title: req.body.title,
-        content: req.body.content
-      })
+      let update = {}
+      if (req.body.title) update.title = req.body.title
+      if (req.body.content) update.content = req.body.content
+      let topic = await Topic.update(req.params.id,update)
       return {
-        code: 0,
         topic
       }
     })().then(r =>{
