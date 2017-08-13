@@ -94,11 +94,30 @@ async function destroy(userId) {
     })
 }
 
+async function login(phoneNumber, password) {
+  const pwd = await pbkdf2Async(password, SALT, 512, 128, 'sha1')
+    .then(r => {
+      return r.toString();
+    })
+    .catch(e => {
+      console.log(e);
+      throw new Error('something goes wrong inside the server');
+    });
+  const user = await UserModel.findOne({phoneNumber: phoneNumber, password: pwd})
+    .select(DEFAULT_PROJECTION)
+    .catch(e => {
+      throw new Error(`something wrong with the server`)
+    });
+  if (!user) throw new Error('No such user!');
+  return user;
+}
+
 module.exports = {
   model: UserModel,
   index,
   show,
   create,
   update,
-  destroy
+  destroy,
+  login
 };
