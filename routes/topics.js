@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const User = require('../models/mongo/User');
+const User = require('../models/mongo/user');
 const Topic = require('../models/mongo/Topic');
 
 /* GET topics listing. */

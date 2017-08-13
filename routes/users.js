@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const User = require('../models/mongo/User')
+const User = require('../models/mongo/user')
 
 /* GET users listing. */
 router.route('/')
@@ -21,7 +21,9 @@ router.route('/')
     (async () => {
       let user = await User.create({
         name: req.body.name,
-        age: req.body.age
+        age: req.body.age,
+        password: req.body.password,
+        phoneNumber: req.body.phone
       })
       return {
         user
