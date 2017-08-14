@@ -80,6 +80,7 @@ async function create(params){
 
 async function update(userId,update) {
   return await UserModel.findOneAndUpdate({_id: userId},update,{new: true})
+    .select(DEFAULT_PROJECTION)
     .catch(e => {
       console.log(e);
       throw new Error(`error in updating data by id: ${userId}`)
@@ -88,6 +89,7 @@ async function update(userId,update) {
 
 async function destroy(userId) {
   return await UserModel.findOneAndRemove({_id: userId})
+    .select(DEFAULT_PROJECTION)
     .catch(e => {
       console.log(e);
       throw new Error(`error in removing data by id: ${userId}`)

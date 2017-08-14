@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 const User = require('../models/mongo/user');
 const Topic = require('../models/mongo/Topic');
+const auth = require('../middlewares/auth_user')
 
 /* GET topics listing. */
 router.route('/')
@@ -18,7 +19,7 @@ router.route('/')
       next(e)
     })
   })
-  .post((req, res, next) => {
+  .post(auth(),(req, res, next) => {
     (async () => {
       const user = await User.show(req.body.userId)
       let topic = await Topic.create({
@@ -51,7 +52,7 @@ router.route('/:id')
       next(e)
     })
   })
-  .patch((req, res, next) => {
+  .patch(auth(),(req, res, next) => {
     (async () => {
       let update = {}
       if (req.body.title) update.title = req.body.title
@@ -66,7 +67,7 @@ router.route('/:id')
       next(e)
     })
   })
-  .delete((req, res, next) => {
+  .delete(auth(),(req, res, next) => {
     (async () => {
       let message = await Topic.destroy(req.params.id)
       return {
@@ -80,7 +81,7 @@ router.route('/:id')
     })
   })
 router.route('/:id/reply')
-  .post((req, res, next) => {
+  .post(auth(),(req, res, next) => {
     (async () => {
       const user = await User.show(req.body.userId)
       let topic = await Topic.reply({

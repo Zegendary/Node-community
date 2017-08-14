@@ -21,7 +21,7 @@ router.route('/login')
       const token = JWT.sign({
         _id: user._id,
         iat: Date.now(),
-        expire: Date.now() + 1000 * 60 * 10
+        expire: Date.now() + 1000 * 60 * 24 * 10
       }, SECRET);
       return {
         code: 0,

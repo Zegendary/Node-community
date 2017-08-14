@@ -10,6 +10,10 @@ module.exports = function(options) {
     try {
       if (!req.get('Authorization')) throw new Error('No auth!');
       let auth = req.get('Authorization').split(' ');
+      if (!auth || auth.length < 2){
+        next(new Error('No auth'));
+        return;
+      }
       const token = auth[1];
       const obj = JWT.verify(token, SECRET);
       if (!obj || !obj._id || !obj.expire) throw new Error('No auth!');
