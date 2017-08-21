@@ -59,7 +59,6 @@ router.route('/:id')
       let update = {}
       if (req.body.name) update.name = req.body.name
       if (req.body.age) update.age = req.body.age
-      console.log(req.file);
       update.avatar = `/upload/${req.file.filename}`
       let user = await User.update(req.params.id,update)
       user.avatar = `${HOST}${user.avatar}`
